@@ -30,5 +30,51 @@ SheetLedger unterstützt nativ die verteilte Buchhaltung für mehrere Benutzer m
 3. **Identitätsbasierte Sicherheit:** Um unbefugte Manipulationen zu verhindern, **sind alle Transaktionsprotokolle an die eindeutige Google-Konto-ID des Erstellers gebunden**. Obwohl mehrere Benutzer innerhalb desselben freigegebenen Hauptbuchs zusammenarbeiten und Daten einsehen können, überprüft unsere State Machine streng die Identitäten: Einträge, die von einer Google-ID erstellt wurden, können von einer anderen ID nicht geändert oder gefälscht werden. Dies garantiert absolute Manipulationssicherheit.
 
 ---
+
+### ❓ Häufig gestellte Fragen (FAQ)
+
+#### F1: Warum wird meine Transaktion nicht sofort in Google Sheets angezeigt?
+
+SheetLedger funktioniert nach dem Local-First-Prinzip. Ihre Änderungen werden sofort auf Ihrem Gerät gespeichert, sodass keine Daten verloren gehen. Die Synchronisierung mit Google Sheets erfolgt im Hintergrund, kann jedoch aufgrund von Google-API-Ratenbegrenzungen oder einer schwachen Internetverbindung gelegentlich in eine Warteschlange gestellt werden oder sich verzögern. Seien Sie unbesorgt: Ihre Daten sind lokal absolut sicher.
+
+#### F2: Was passiert, wenn ich versehentlich eine Zeile direkt in Google Sheets bearbeite oder lösche?
+
+Direkte manuelle Bearbeitungen können die strukturelle Integrität und die Sicherheits-Validierungshashes Ihres Hauptbuchs beschädigen. Wenn SheetLedger ungültige manuelle Änderungen erkennt, wird die Synchronisierung für dieses Tabellenblatt zum Schutz Ihrer Daten möglicherweise pausiert. Sollte dies passieren, löschen Sie bitte zuerst das Hauptbuch in der SheetLedger-App, um das weitere Übertragen von Daten zu verhindern. Stellen Sie anschließend die Tabelle über Google Sheets -> Datei -> Versionsverlauf auf eine vorherige Version wieder her (oder kontaktieren Sie den Support). Erstellen Sie schlussendlich ein neues Hauptbuch in SheetLedger und verbinden Sie Ihre Cloud-Daten erneut.
+
+#### F3: Kann ich dasselbe Hauptbuch auf mehreren Geräten bearbeiten?
+
+Ja! Melden Sie sich einfach auf Ihren verschiedenen Geräten mit demselben Google-Konto an und verknüpfen Sie SheetLedger mit demselben Cloud-Tabellenblatt. Das ist eines der größten Highlights dieser App: Das Erlebnis nahtloser Cloud-Daten bei vollständiger Kontrolle über Ihre Daten in Ihrem eigenen Google Drive. Niemand sonst kann darauf zugreifen – selbst wenn die Daten bei Google gespeichert sind, kann Google sie ohne den Entschlüsselungsschlüssel nicht entschlüsseln.
+
+#### F4: Kann ich gemeinsam mit meinem Ehe- oder Lebenspartner Ausgaben in einem Hauptbuch erfassen?
+
+Ja! Teilen Sie dazu einfach das verknüpfte Google-Tabellenblatt über Google Drive mit dem Google-Konto Ihres Partners (erteilen Sie ihm Bearbeiter-Rechte). Lassen Sie Ihren Partner anschließend SheetLedger auf seinem Gerät öffnen und sich mit diesem geteilten Tabellenblatt verbinden. Sie beide können Ausgaben erfassen – unsere Identitätsprüfung stellt sicher, dass alle Einträge fälschungssicher bleiben. In der App können Sie Daten zudem ganz einfach nach bestimmten Benutzern filtern: Während Standarddiagramme die Daten aller Personen analysieren, können Sie eine E-Mail-Adresse als Filter festlegen, wenn Sie beispielsweise nur die Einträge Ihres Partners sehen möchten.
+
+Wichtiger Hinweis: Um Ihre Datensicherheit zu gewährleisten, fordert SheetLedger standardmäßig nur minimale Google Drive-Schreib- und Lese-Berechtigungen an. Damit kann nicht auf von anderen Personen geteilte Tabellenblätter zugegriffen werden. Der Benutzer, mit dem die Tabelle geteilt wurde, muss die Option in der App aktivieren (wie im folgenden Screenshot gezeigt) und die App neu starten, um die Berechtigung zum Lesen und Schreiben geteilter Tabellenblätter zu erteilen.
+
+![](rw-de.png)
+
+#### F5: Welche Einschränkungen gibt es bei der kostenlosen Version im Vergleich zum Premium-Abonnement?
+
+Die Cloud-Funktionen stehen nur mit einem aktiven Abonnement zur Verfügung. Da Google-API-Aufrufe nicht kostenlos sind, müssen wir Limits für die Cloud-Nutzung durchsetzen, um die Betriebskosten zu decken und das Projekt nachhaltig zu betreiben. Bei den lokalen Funktionen (ohne Cloud) sind alle Versionen absolut identisch – es gibt weder Funktionseinschränkungen noch störende Werbung. Wenn Sie keine Cloud-Funktionen benötigen, ist kein Abonnement erforderlich. Für die meisten Nutzer, die Cloud-Funktionen wünschen, empfehlen wir den Basic-Tarif, der alle grundlegenden Cloud-Funktionen abdeckt und die Anforderungen der meisten Anwender vollkommen erfüllt.
+
+#### F6: Kann ich SheetLedger auf Reisen oder ohne Internetverbindung nutzen?
+
+Ja, absolut! SheetLedger ist offline voll funktionsfähig. Sie können Transaktionen jederzeit ohne Netzverbindung hinzufügen, bearbeiten oder suchen. Sobald Sie wieder online sind, synchronisiert SheetLedger alle ausstehenden Offline-Änderungen automatisch mit Ihren Google Sheets.
+
+
+#### F7: Wie übertrage ich meine Hauptbücher auf ein neues Smartphone oder Tablet?
+
+- Für Cloud-verknüpfte Daten: Laden Sie SheetLedger einfach auf Ihr neues Gerät herunter, melden Sie sich mit demselben Google-Konto an und verbinden Sie es mit Ihrem bestehenden Google-Tabellenblatt-Hauptbuch. Alle Ihre Finanzdaten werden nahtlos abgerufen und synchronisiert.
+
+- Für rein lokale Daten (ohne Cloud): Wenn Ihr Hauptbuch ausschließlich lokal gespeichert und nicht mit Google Sheets verknüpft ist, können Sie unsere integrierte Sicherungs- und Wiederherstellungsfunktion (Backup & Restore) nutzen, um Ihre Daten zu exportieren und auf das neue Gerät zu übertragen.
+
+#### F8: Warum gibt es keine Wiederherstellungsfunktion für Cloud-Daten?
+
+Cloud-Daten werden über eine verteilte Schreibarchitektur verarbeitet. Eine direkte Wiederherstellungsfunktion könnte Schreibkonflikte auslösen und zu Datenbeschädigungen führen. Aus diesem Grund bieten wir keine integrierte Wiederherstellungsfunktion für Cloud-Hauptbücher an. Wenn Sie Ihre Cloud-Daten sichern oder wiederherstellen möchten, können Sie einfach direkt in Google Drive eine Kopie Ihres Google-Tabellenblatts als Backup erstellen. Wenn Sie eine Wiederherstellung benötigen, erstellen Sie einfach ein neues Hauptbuch in SheetLedger und verknüpfen Sie es mit dieser gesicherten Kopie.
+
+---
+
 © 2026 gophini. Entwickelt für ultimative Finanzsouveränität.  
 Benötigen Sie technische Unterstützung? Kontaktieren Sie uns unter: **gophini.support@gmail.com**
+
+
