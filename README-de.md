@@ -15,7 +15,7 @@ SheetLedger ist ein serverloses, auf Privatsphäre ausgerichtetes Finanzwerkzeug
 * **Client-seitige Verschlüsselung:** Wenn die Cloud-Synchronisierung aktiviert ist, werden Ihre Daten vor dem Verlassen Ihres Geräts vollständig mit clientseitigem **AES-256** verschlüsselt. Ihre Finanzdaten werden direkt mit Ihren persönlichen Google Drive- und Google Sheets-APIs in einem Zero-Knowledge-Geheimtextformat synchronisiert.
 
 ### 📥 Herunterladen
-Verfügbar im Google Play Store für Nordamerika, Europa und ausgewählte Regionen.
+Verfügbar im [Google Play Store](https://play.google.com/store/apps/details?id=com.king011.apps.sheetledger) für Nordamerika, Europa und ausgewählte Regionen.
 
 ---
 © 2026 gophini. Mit größter Sorgfalt entwickelt.  
