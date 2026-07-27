@@ -30,5 +30,52 @@ SheetLedger natively supports distributed multiplayer bookkeeping with industry-
 3. **Identity-Based Security:** To prevent unauthorized tampering, **all transaction logs are tied to the creator's unique Google Account ID**. While multiple users can view and collaborate within the same shared ledger, our state machine strictly verifies identities—records created by one Google ID cannot be modified or forged by another, ensuring mathematical tamper-proofing.
 
 ---
+
+### ❓ Frequently Asked Questions (FAQ)
+
+#### Q1: Why is my transaction not showing up in Google Sheets immediately?
+
+SheetLedger works local-first. Your changes are saved instantly to your device so you never lose data. Syncing to Google Sheets happens in the background, but may occasionally be queued or delayed due to Google API rate limits or weak internet connection. Rest assured, your data is completely safe locally.
+
+
+#### Q2: What happens if I accidentally edit or delete a row directly inside Google Sheets?
+
+Direct manual edits can corrupt the structural integrity and security validation hashes of your ledger. If SheetLedger detects invalid manual changes, sync for that sheet may pause to protect your data. If this happens, please first delete the ledger inside SheetLedger to prevent pushing further updates. Next, restore the spreadsheet to a previous working version via Google Sheets -> File -> Version history (or contact support). Finally, create a new ledger in SheetLedger and reconnect your cloud data.
+
+#### Q3: Can I modify the same ledger across multiple devices?
+
+Yes! Simply sign in with the same Google Account on your different devices, then link SheetLedger to the exact same cloud Sheet. This is one of the biggest features of this app: a seamless cloud-data experience, while keeping full control of your data inside your own Google Drive. No one else can access it—even though the data is stored on Google's servers, without the decryption key, even Google cannot decrypt your data.
+
+#### Q4: Can my spouse/partner and I track expenses together in one ledger?
+
+Yes! Simply share the linked Google Sheet with your partner's Google Account via Google Drive (grant them Editor access). Next, have them open SheetLedger on their device and link to that shared sheet. Both of you can log expenses—our identity verification ensures all records remain tamper-proof. In the app, you can also easily filter data by specific users; for example, while default charts analyze everyone's entries, you can filter by email address if you only want to view your partner's records.
+
+Important: To protect your data security, SheetLedger requests minimum Google Drive read/write permissions by default, which cannot access sheets shared by others. The user receiving the shared sheet must check the corresponding option in the app (as shown in the screenshot below) and restart the app to grant permission to read and write shared sheets.
+
+![](rw.png)
+
+
+#### Q5: What are the limits of the Free tier vs. Premium subscription?
+
+Cloud functionality is only available with an active subscription. Because Google API calls are not free, we enforce cloud usage limits to manage operational costs and keep the project sustainable. For non-cloud local features, all versions are completely identical—there are no functional limits and zero annoying ads. If you don't need cloud synchronization, no subscription is required. For most users who want cloud capabilities, we recommend the Basic plan, which covers all essential cloud features and meets the needs of majority of users.
+
+#### Q6: Can I use SheetLedger while traveling or without internet access?
+
+Yes, absolutely! SheetLedger is fully functional offline. You can add, edit, or search transactions anytime without a network connection. Once you are back online, SheetLedger will automatically sync all pending offline changes to your Google Sheets.
+
+#### Q7: How do I transfer my ledgers to a new phone or tablet?
+
+- For cloud-linked data: Simply download SheetLedger on your new device, sign in with the same Google Account, and link to your existing Google Sheet ledger. All your financial data will be seamlessly retrieved and synchronized.
+
+- For local-only data (unlinked): If your ledger is strictly stored locally without a Google Sheet connection, you can use our built-in Backup & Restore feature to export and migrate your data to the new device.
+
+#### Q8: Why is there no restore function for cloud-linked data?
+
+Cloud data utilizes distributed writing. Offering a direct restore mechanism could trigger write conflicts and cause data corruption, which is why a built-in restore feature is omitted for cloud ledgers. If you wish to backup or restore cloud data, you can simply create a copy of your Google Sheet directly inside Google Drive as a backup. When you need to restore, create a new ledger in SheetLedger and link it to that backup copy.
+
+---
+
 © 2026 gophini. Built for ultimate financial sovereignty.  
 Need technical assistance? Reach out to: **gophini.support@gmail.com**
+
+
