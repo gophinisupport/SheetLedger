@@ -2,7 +2,7 @@
 
 > **Privacy-First, Local-First Personal Ledger Built for Power Users.**
 
-[ Auf Deutsch anzeigen 🇩🇪 ](README-de) | [ Privacy Policy 🛡️ ](privacy)
+[ Auf Deutsch anzeigen 🇩🇪 ](README-de) | [ Privacy Policy 🛡️ ](privacy) | [ Help ❓ ](help)
 
 ---
 
