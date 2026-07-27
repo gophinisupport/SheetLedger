@@ -15,7 +15,7 @@ SheetLedger is a serverless, privacy-centric personal finance utility designed f
 * **Client-Side Encryption:** When cloud sync is enabled, your financial data is fully encrypted using client-side **AES-256** *before* leaving your device. Your ledger is synced directly to your personal Google Drive/Google Sheets in a Zero-Knowledge ciphertext format.
 
 ### 📥 Download
-Available on the Google Play Store for North America, Europe, and select tech-forward regions.
+Available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.king011.apps.sheetledger) for North America, Europe, and select tech-forward regions.
 
 ---
 © 2026 gophini. Built with meticulous care.  
