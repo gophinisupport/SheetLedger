@@ -1,33 +1,45 @@
 # SheetLedger
 
-[ View in English 🇺🇸 ](./) | [ Datenschutzrichtlinie 🛡️ ](privacy-de) | [ Hilfe ❓ ](help-de)
+[ 🇺🇸 View in English ](./) | [ Datenschutz 🛡️ ](privacy-de) | [ Nutzungsbedingungen 📄 ](service-de) | [ Hilfe ❓ ](help-de)
 
 ---
 
-### 📱 Über SheetLedger & Nutzung von Google-Diensten
+## Zweck der Anwendung (Application Purpose Statement)
 
-**SheetLedger** ist eine datenschutzorientierte, lokal zentrierte Anwendung für persönliche Finanzen und Ausgabenverfolgung, die Nutzer dabei unterstützt, die vollständige Kontrolle über ihre persönlichen Budgets und Finanztransaktionen zu behalten.
+**SheetLedger** ist eine Local-First-Anwendung für persönliche Finanzen, Ausgabenverfolgung und Budgetverwaltung. Der Hauptzweck von **SheetLedger** besteht darin, Nutzern das Erfassen, Organisieren und Analysieren ihrer täglichen Finanztransaktionen, Kontostände und Budgets in einer sicheren und datenschutzorientierten Umgebung zu ermöglichen.
 
-Um absolute Daten-Souveränität und Privatsphäre zu gewährleisten, integriert SheetLedger direkt **Google Sheets** und **Google Drive APIs**. Dadurch können Nutzer all ihre persönlichen Finanzdaten direkt in ihrem eigenen Google-Konto speichern und verwalten, ohne auf zentrale Drittanbieter-Server angewiesen zu sein.
-
-#### Wie SheetLedger Ihre Google-Kontodaten verwendet:
-* **Google Sheets-Integration:** SheetLedger greift ausschließlich auf Google Sheets zu, um Ihre persönlichen Buchhaltungseinträge (wie Einnahmen, Ausgaben und Kategorie-Budgets) direkt in Tabellenkalkulationen in Ihrem persönlichen Google Drive zu erstellen, zu lesen, zu aktualisieren und zu verwalten.
-* **Google Drive-Integration:** SheetLedger nutzt den Google Drive-Speicher ausschließlich zum Sichern, Synchronisieren und Wiederherstellen Ihrer verschlüsselten Anwendungskonfigurationen und Transaktionsdatenbankdateien auf Ihren persönlichen Geräten.
-* **Keine Server von Drittanbietern:** Alle Interaktionen erfolgen direkt zwischen Ihrem Gerät und den offiziellen Google-APIs. Wir besitzen, betreiben oder übermitteln Ihre Finanzdaten an keinerlei externe Server oder Drittanbieter.
+Um nahtlose Cloud-Backups, Datensynchronisierung und die Zusammenarbeit mehrerer Nutzer ohne zentrale Drittanbieter-Server zu ermöglichen, integriert **SheetLedger** direkt Google-Dienste. Dadurch behalten Nutzer die vollständige Datenhoheit über ihre Finanzdaten innerhalb ihres eigenen Google-Kontos.
 
 ---
 
-### 💎 Absolute Daten-Souveränität
-SheetLedger ist ein serverloses, datenschutzorientiertes Finanzwerkzeug für Personen, die die vollständige Kontrolle über ihre Finanzdaten verlangen. Durch die Kombination einer hochleistungsfähigen lokalen Transaktions-State-Machine mit Ihrer privaten Cloud-Infrastruktur bietet SheetLedger ein schlankes Eingabeerlebnis und stellt sicher, dass Ihre Finanzdaten mathematisch Ihnen gehören.
+## Google OAuth-Berechtigungen & Datenschutzhinweise
 
-### 🛠️ Architektur & Kernphilosophie
-* **Keine zentralen Server:** Wir besitzen, betreiben oder warten keine Backend-Server oder zentralen Datenbanken. Ihre Identität und Protokolle gelangen niemals in Analyse-Pipelines von Drittanbietern.
-* **Local-First-Performance:** Alle Finanztransaktionen, Konfigurationen und Metadaten werden sofort verarbeitet und in der sicheren Anwendungs-Sandbox Ihres Geräts gespeichert.
-* **Clientseitige Verschlüsselung:** Wenn die Cloud-Synchronisierung aktiviert ist, werden Ihre Finanzdaten mit clientseitigem **AES-256** verschlüsselt, *bevor* sie Ihr Gerät verlassen. Ihr Buchhaltungsbuch wird direkt in einem Zero-Knowledge-Geheimtextformat mit Ihrem persönlichen Google Drive/Google Sheets synchronisiert.
+**SheetLedger** fordert spezifische Google OAuth-Berechtigungen ausschließlich zur Bereitstellung der Kernfunktionen an. Die Berechtigungen werden wie folgt verwendet:
 
-### 📥 Download
-Erhältlich im [Google Play Store](https://play.google.com/store/apps/details?id=com.king011.apps.sheetledger) für Nordamerika, Europa und ausgewählte technologisch fortschrittliche Regionen.
+* **`email` (Nutzeridentifikation & Änderungshistorie):** Wird ausschließlich verwendet, um den Ersteller oder Bearbeiter von Transaktionseinträgen in gemeinsamen Haushaltsbüchern zu identifizieren. Dies stellt sicher, dass in kollaborativen Tabellen Einträge korrekt den jeweiligen Personen zugeordnet werden können.
+* **`https://www.googleapis.com/auth/drive.file` (Zugriff auf eigene Tabellen):** Wird verwendet, um Google Spreadsheet-Datenbankdateien zu erstellen, zu lesen, zu aktualisieren und zu verwalten, die explizit von **SheetLedger** im persönlichen Google Drive des Nutzers erstellt oder damit geöffnet wurden.
+* **`https://www.googleapis.com/auth/spreadsheets` (Zugriff auf freigegebene Tabellen):** Wird nur bei Bedarf (On-Demand) angefordert, wenn der Nutzer von Dritten freigegebene Tabellen verknüpfen und gemeinsam bearbeiten möchte. Dies ermöglicht **SheetLedger** das Lesen und Synchronisieren von Einträgen in freigegebenen Tabellen, bei denen die `drive.file`-Sandbox-Grenzen greifen.
+
+### Absolute Datenschutzgarantie
+* **Kein Drittanbieter-Backend:** **SheetLedger** arbeitet vollständig serverlos. Alle Google-Nutzerdaten und Finanzeinträge werden lokal auf Ihrem Gerät verarbeitet und direkt an die offiziellen APIs von Google übertragen. Wir speichern, sammeln, verkaufen oder übertragen Ihre Daten nicht an externe Server.
+* **Einhaltung der Richtlinien für begrenzte Nutzung (Limited Use Compliance):** Die Nutzung und Übertragung von Informationen, die von Google-APIs empfangen wurden, an andere Apps durch **SheetLedger** entspricht den [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy), einschließlich der Anforderungen für die begrenzte Nutzung.
 
 ---
-© 2026 gophini. Mit größter Sorgfalt entwickelt.  
-Für Anfragen und technisches Feedback kontaktieren Sie bitte: **gophini.support@gmail.com**
+
+## Hauptmerkmale & Architektur
+
+* **Absolute Datenhoheit:** Serverlose Finanzanwendung für Nutzer, die die vollständige Kontrolle über ihre Daten verlangen.
+* **Local-First-Performance:** Lokale Transaktionen, Kontoeinstellungen und Kategorien werden sofort in der sicheren Anwendungs-Sandbox des Geräts gespeichert.
+* **Zusammenarbeit mehrerer Nutzer:** Native Unterstützung für freigegebene Haushaltsbücher mit automatischer Zuordnung der Bearbeiter über deren E-Mail-Kennung.
+* **Automatisierter Datenschutz:** Verschlüsselungsmetadaten, Datenbankstrukturen und Systemkonfigurationen werden automatisch in den App Properties der Tabelle verwaltet, ohne dass komplexe Passwörter vom Nutzer gemerkt werden müssen.
+
+---
+
+## Download & Verfügbarkeit
+
+Erhältlich im [Google Play Store](https://play.google.com/store/apps/details?id=com.king011.apps.sheetledger).
+
+---
+
+© 2026 gophini (`The Powerpuff Penguin`). Mit Sorgfalt entwickelt.  
+Support & Kontakt: [gophini.support@gmail.com](mailto:gophini.support@gmail.com)
