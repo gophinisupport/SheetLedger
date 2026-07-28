@@ -6,9 +6,9 @@
 
 ## Application Purpose Statement
 
-**SheetLedger** is a local-first personal finance, expense tracking, and budget management application. The primary purpose of **SheetLedger** is to allow users to track, organize, and analyze their daily financial transactions, account balances, and budgets in a secure, privacy-centric environment.
+**SheetLedger** is a personal finance, expense tracking, and budget management application. The primary purpose of **SheetLedger** is to allow users to track, organize, and analyze their daily financial transactions, accounts, and budgets in a secure, local-first environment.
 
-To offer seamless cloud backup, data synchronization, and multi-user collaboration without relying on central third-party servers, **SheetLedger** directly integrates with Google Services, allowing users to maintain full sovereignty over their financial records within their own Google accounts.
+To provide cloud backup, cross-device synchronization, and multi-user collaboration without relying on central third-party servers, **SheetLedger** integrates directly with Google Drive, Google Sheets, and Google User Account APIs. This enables users to store, manage, and back up their personal financial records entirely within their own private Google accounts.
 
 ---
 
