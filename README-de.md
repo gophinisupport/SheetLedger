@@ -1,6 +1,6 @@
 # SheetLedger
 
-[ View in English 🇺🇸 ](README) | [ Datenschutzrichtlinie 🛡️ ](privacy-de) | [ Hilfe ❓ ](help-de)
+[ View in English 🇺🇸 ](./) | [ Datenschutzrichtlinie 🛡️ ](privacy-de) | [ Hilfe ❓ ](help-de)
 
 ---
 
