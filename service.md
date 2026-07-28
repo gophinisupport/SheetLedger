@@ -1,4 +1,4 @@
-# SheetLedger Terms of Service
+# SheetLedger - Terms of Service
 
 [ Auf Deutsch anzeigen 🇩🇪 ](service-de)
 
