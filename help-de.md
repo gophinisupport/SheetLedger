@@ -49,10 +49,6 @@ Ja! Melden Sie sich einfach auf Ihren verschiedenen Geräten mit demselben Googl
 
 Ja! Teilen Sie dazu einfach das verknüpfte Google-Tabellenblatt über Google Drive mit dem Google-Konto Ihres Partners (erteilen Sie ihm Bearbeiter-Rechte). Lassen Sie Ihren Partner anschließend SheetLedger auf seinem Gerät öffnen und sich mit diesem geteilten Tabellenblatt verbinden. Sie beide können Ausgaben erfassen – unsere Identitätsprüfung stellt sicher, dass alle Einträge fälschungssicher bleiben. In der App können Sie Daten zudem ganz einfach nach bestimmten Benutzern filtern: Während Standarddiagramme die Daten aller Personen analysieren, können Sie eine E-Mail-Adresse als Filter festlegen, wenn Sie beispielsweise nur die Einträge Ihres Partners sehen möchten.
 
-Wichtiger Hinweis: Um Ihre Datensicherheit zu gewährleisten, fordert SheetLedger standardmäßig nur minimale Google Drive-Schreib- und Lese-Berechtigungen an. Damit kann nicht auf von anderen Personen geteilte Tabellenblätter zugegriffen werden. Der Benutzer, mit dem die Tabelle geteilt wurde, muss die Option in der App aktivieren (wie im folgenden Screenshot gezeigt) und die App neu starten, um die Berechtigung zum Lesen und Schreiben geteilter Tabellenblätter zu erteilen.
-
-![](rw-de.png)
-
 #### F5: Welche Einschränkungen gibt es bei der kostenlosen Version im Vergleich zum Premium-Abonnement?
 
 Die Cloud-Funktionen stehen nur mit einem aktiven Abonnement zur Verfügung. Da Google-API-Aufrufe nicht kostenlos sind, müssen wir Limits für die Cloud-Nutzung durchsetzen, um die Betriebskosten zu decken und das Projekt nachhaltig zu betreiben. Bei den lokalen Funktionen (ohne Cloud) sind alle Versionen absolut identisch – es gibt weder Funktionseinschränkungen noch störende Werbung. Wenn Sie keine Cloud-Funktionen benötigen, ist kein Abonnement erforderlich. Für die meisten Nutzer, die Cloud-Funktionen wünschen, empfehlen wir den Basic-Tarif, der alle grundlegenden Cloud-Funktionen abdeckt und die Anforderungen der meisten Anwender vollkommen erfüllt.
