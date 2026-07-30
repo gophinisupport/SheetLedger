@@ -18,7 +18,6 @@ To offer seamless cloud backup, data synchronization, and multi-user collaborati
 
 * **`email` (User Identification & Audit Trail):** Used exclusively to identify the creator or editor of transaction entries in shared ledgers. This ensures multi-user collaborative ledgers can correctly attribute entries and audit histories to individual contributors.
 * **`https://www.googleapis.com/auth/drive.file` (Personal Sheet Access):** Used to create, read, update, and manage Google Spreadsheet database files explicitly created by or opened with **SheetLedger** inside the user's personal Google Drive.
-* **`https://www.googleapis.com/auth/spreadsheets` (Collaborative Shared Sheet Access):** Requested on-demand only when a user opts to link and co-edit shared ledgers created by third parties. This allows **SheetLedger** to read and sync transaction entries across shared spreadsheets where `drive.file` sandbox boundaries apply.
 
 ### Absolute Privacy Guarantee
 * **Zero Third-Party Backend:** **SheetLedger** operates entirely serverless. All Google user data and ledger entries are processed locally on your device and transmitted directly to Google's official APIs. We do not store, collect, sell, or transfer your data to any external servers.
