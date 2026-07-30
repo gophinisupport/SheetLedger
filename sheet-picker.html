@@ -28,7 +28,6 @@
 
       // View 1: Shared With Me Spreadsheets Only
       const sharedView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
-          .setTitle('Shared with me')
           .setMimeTypes('application/vnd.google-apps.spreadsheet')
           .setOwnedByMe(false);
 
