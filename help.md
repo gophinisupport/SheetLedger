@@ -50,11 +50,6 @@ Yes! Simply sign in with the same Google Account on your different devices, then
 
 Yes! Simply share the linked Google Sheet with your partner's Google Account via Google Drive (grant them Editor access). Next, have them open SheetLedger on their device and link to that shared sheet. Both of you can log expenses—our identity verification ensures all records remain tamper-proof. In the app, you can also easily filter data by specific users; for example, while default charts analyze everyone's entries, you can filter by email address if you only want to view your partner's records.
 
-Important: To protect your data security, SheetLedger requests minimum Google Drive read/write permissions by default, which cannot access sheets shared by others. The user receiving the shared sheet must check the corresponding option in the app (as shown in the screenshot below) and restart the app to grant permission to read and write shared sheets.
-
-![](rw.png)
-
-
 #### Q5: What are the limits of the Free tier vs. Premium subscription?
 
 Cloud functionality is only available with an active subscription. Because Google API calls are not free, we enforce cloud usage limits to manage operational costs and keep the project sustainable. For non-cloud local features, all versions are completely identical—there are no functional limits and zero annoying ads. If you don't need cloud synchronization, no subscription is required. For most users who want cloud capabilities, we recommend the Basic plan, which covers all essential cloud features and meets the needs of majority of users.
