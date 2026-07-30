@@ -2,68 +2,76 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Google Picker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Sheet Picker</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+  </style>
   <script src="https://apis.google.com/js/api.js"></script>
   <script>
     let isPickerApiLoaded = false;
 
-    // Initialize the Google Picker API module on page load
     function initPicker() {
       gapi.load('picker', {
         'callback': () => {
           isPickerApiLoaded = true;
+          if (window.PickerChannel) {
+            window.PickerChannel.postMessage(JSON.stringify({ type: 'READY' }));
+          }
         }
       });
     }
 
-    /**
-     * Call this function from Flutter WebView:
-     * controller.runJavaScript("openGooglePicker('$appId', '$accessToken', '$apiKey');");
-     */
     function openGooglePicker(appId, accessToken, apiKey) {
       if (!isPickerApiLoaded) {
-        console.error('Google Picker API is not fully loaded yet. Please try again.');
+        console.error('Google Picker API 未載入完成。');
         return;
       }
 
-      // View 1: Shared With Me Spreadsheets Only
+      // 視圖 1：他人共享給我的試算表
       const sharedView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
           .setMimeTypes('application/vnd.google-apps.spreadsheet')
           .setOwnedByMe(false);
 
-      // View 2: All Spreadsheets (Owned by me + Shared with me)
+      // 視圖 2：所有試算表
       const allSheetsView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
           .setMimeTypes('application/vnd.google-apps.spreadsheet');
 
-      // Construct the Picker interface
+      const origin = window.location.protocol + '//' + window.location.host;
+
       const picker = new google.picker.PickerBuilder()
           .setAppId(appId)
           .setOAuthToken(accessToken)
           .setDeveloperKey(apiKey)
-          .addView(sharedView)     // Tab 1: Shared with me (Default)
-          .addView(allSheetsView)  // Tab 2: All Spreadsheets
+          .setOrigin(origin)
+          .setTitle('Select Google Sheet')
+          .addView(sharedView)
+          .addView(allSheetsView)
           .setCallback(pickerCallback)
           .build();
 
       picker.setVisible(true);
     }
 
-    /**
-     * Callback handler when the user selects a file or cancels.
-     */
     function pickerCallback(data) {
       if (data.action === google.picker.Action.PICKED) {
         const doc = data.docs[0];
         const result = {
+          type: 'RESULT',
           id: doc.id,
           name: doc.name
         };
 
-        // Post JSON result to Flutter JavaScriptChannel
         if (window.PickerChannel) {
           window.PickerChannel.postMessage(JSON.stringify(result));
-        } else {
-          console.log('Picked Document:', result);
+        }
+      } else if (data.action === google.picker.Action.CANCEL) {
+        if (window.PickerChannel) {
+          window.PickerChannel.postMessage(JSON.stringify({ type: 'CANCEL' }));
         }
       }
     }
