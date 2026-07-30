@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Google Picker</title>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script>
+    let isPickerApiLoaded = false;
+
+    // Initialize the Google Picker API module on page load
+    function initPicker() {
+      gapi.load('picker', {
+        'callback': () => {
+          isPickerApiLoaded = true;
+        }
+      });
+    }
+
+    /**
+     * Call this function from Flutter WebView:
+     * controller.runJavaScript("openGooglePicker('$appId', '$accessToken', '$apiKey');");
+     */
+    function openGooglePicker(appId, accessToken, apiKey) {
+      if (!isPickerApiLoaded) {
+        console.error('Google Picker API is not fully loaded yet. Please try again.');
+        return;
+      }
+
+      // View 1: Shared With Me Spreadsheets Only
+      const sharedView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+          .setTitle('Shared with me')
+          .setMimeTypes('application/vnd.google-apps.spreadsheet')
+          .setOwnedByMe(false);
+
+      // View 2: All Spreadsheets (Owned by me + Shared with me)
+      const allSheetsView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+          .setTitle('All Spreadsheets')
+          .setMimeTypes('application/vnd.google-apps.spreadsheet');
+
+      // Construct the Picker interface
+      const picker = new google.picker.PickerBuilder()
+          .setAppId(appId)
+          .setOAuthToken(accessToken)
+          .setDeveloperKey(apiKey)
+          .addView(sharedView)     // Tab 1: Shared with me (Default)
+          .addView(allSheetsView)  // Tab 2: All Spreadsheets
+          .setCallback(pickerCallback)
+          .build();
+
+      picker.setVisible(true);
+    }
+
+    /**
+     * Callback handler when the user selects a file or cancels.
+     */
+    function pickerCallback(data) {
+      if (data.action === google.picker.Action.PICKED) {
+        const doc = data.docs[0];
+        const result = {
+          id: doc.id,
+          name: doc.name
+        };
+
+        // Post JSON result to Flutter JavaScriptChannel
+        if (window.PickerChannel) {
+          window.PickerChannel.postMessage(JSON.stringify(result));
+        } else {
+          console.log('Picked Document:', result);
+        }
+      }
+    }
+  </script>
+</head>
+<body onload="initPicker()">
+</body>
+</html>
