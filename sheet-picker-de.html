@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #202124;
+            --btn-bg-color: #1a73e8;
+            --btn-text-color: #ffffff;
+        }
+
+        /* 依據系統偏好自動適應深色主題 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #121212;
+                --text-color: #e3e2e6;
+                --btn-bg-color: #a8c7fa;
+                --btn-text-color: #062e6f;
+            }
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        #auth-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 16px;
+        }
+
+        .auth-text {
+            font-size: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .btn-login {
+            background-color: var(--btn-bg-color);
+            color: var(--btn-text-color);
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 24px;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-login:active {
+            opacity: 0.85;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="auth-container" style="display: none;">
+        <p class="auth-text">Bitte autorisieren Sie den Zugriff auf Google Drive</p>
+        <button class="btn-login" onclick="handleAuthClick()">Mit Google anmelden</button>
+    </div>
+
+    <script>
+        let tokenClient = null;
+        let accessToken = null;
+        let gApiKey = '';
+        let gClientId = '';
+        let gAppId = '';
+        let gDisplayList = false;
+
+        /**
+         * 安全地發送訊息至 Flutter 控制通道
+         * @param {Object} messageBody 傳送給 Flutter 的資料物件
+         */
+        function sendToFlutter(messageBody) {
+            const payload = JSON.stringify(messageBody);
+
+            if (window.FlutterPickerChannel && typeof window.FlutterPickerChannel.postMessage === 'function') {
+                window.FlutterPickerChannel.postMessage(payload);
+            } else if (window.flutter_inappwebview && typeof window.flutter_inappwebview.callHandler === 'function') {
+                window.flutter_inappwebview.callHandler('FlutterPickerChannel', payload);
+            } else {
+                console.warn('FlutterPickerChannel is not initialized yet.');
+            }
+        }
+
+        /**
+         * 初始化 Google Picker 與 Google Identity Services (GIS)
+         * @param {string} apiKey API 金鑰
+         * @param {string} clientId OAuth 客戶端 ID
+         * @param {string} appId Google App 專案 ID
+         * @param {boolean} displayList 是否以列表形式展示
+         */
+        window.loadPicker = function (apiKey, clientId, appId, displayList) {
+            gApiKey = apiKey;
+            gClientId = clientId;
+            gAppId = appId;
+            gDisplayList = Boolean(displayList);
+
+            if (typeof gapi === 'undefined') {
+                console.error('Failed to load Google API client library (gapi)');
+                sendToFlutter({ action: 'error', error: 'Google API library not loaded' });
+                return;
+            }
+
+            gapi.load('picker', () => {
+                try {
+                    tokenClient = google.accounts.oauth2.initTokenClient({
+                        client_id: gClientId,
+                        scope: 'https://www.googleapis.com/auth/drive.file',
+                        callback: (response) => {
+                            if (response.error !== undefined) {
+                                console.error('OAuth token request error:', response.error);
+                                sendToFlutter({ action: 'error', error: response.error });
+                                return;
+                            }
+                            accessToken = response.access_token;
+
+                            const authContainer = document.getElementById('auth-container');
+                            if (authContainer) {
+                                authContainer.style.display = 'none';
+                            }
+
+                            createPicker();
+                        },
+                    });
+
+                    handleAuthClick();
+                } catch (error) {
+                    console.error('Failed to initialize GIS token client:', error);
+                    sendToFlutter({ action: 'error', error: error.toString() });
+                }
+            });
+        };
+
+        /**
+         * 處理 Google 帳戶授權點擊或重新存取權限
+         */
+        function handleAuthClick() {
+            if (accessToken === null) {
+                const authContainer = document.getElementById('auth-container');
+                if (authContainer) {
+                    authContainer.style.display = 'flex';
+                }
+
+                if (tokenClient) {
+                    tokenClient.requestAccessToken({ prompt: 'select_account' });
+                }
+            } else {
+                createPicker();
+            }
+        }
+
+        /**
+         * 建立並構建 Google Picker 元件
+         */
+        function createPicker() {
+            try {
+                // 1. 設定「與我共享」視圖
+                const sharedView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS);
+                sharedView.setMimeTypes("application/vnd.google-apps.spreadsheet");
+                sharedView.setOwnedByMe(false);
+                sharedView.setLabel("Für mich freigegeben");
+
+                // 2. 設定「全部」試算表視圖
+                const allView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS);
+                allView.setMimeTypes("application/vnd.google-apps.spreadsheet");
+                allView.setLabel("Alle");
+
+                if (gDisplayList) {
+                    sharedView.setMode(google.picker.DocsViewMode.LIST);
+                    allView.setMode(google.picker.DocsViewMode.LIST);
+                }
+
+                const currentOrigin = window.location.protocol + '//' + window.location.host;
+
+                // 取得精確的視圖尺寸
+                const viewportWidth = window.visualViewport ? window.visualViewport.width : (window.innerWidth || document.documentElement.clientWidth);
+                const viewportHeight = window.visualViewport ? window.visualViewport.height : (window.innerHeight || document.documentElement.clientHeight);
+
+                const picker = new google.picker.PickerBuilder()
+                    .addView(sharedView)
+                    .addView(allView)
+                    .setOAuthToken(accessToken)
+                    .setDeveloperKey(gApiKey)
+                    .setAppId(gAppId)
+                    .setOrigin(currentOrigin)
+                    .setSize(viewportWidth, viewportHeight)
+                    .setCallback(pickerCallback)
+                    .build();
+
+                picker.setVisible(true);
+            } catch (error) {
+                console.error('Failed to build Google Picker instance:', error);
+                sendToFlutter({ action: 'error', error: error.toString() });
+            }
+        }
+
+        /**
+         * Google Picker 選取動作之監聽回調
+         * @param {Object} data Google Picker 回傳的資料結構
+         */
+        function pickerCallback(data) {
+            if (data[google.picker.Response.ACTION] === google.picker.Action.PICKED) {
+                const doc = data[google.picker.Response.DOCUMENTS][0];
+                const payload = {
+                    action: 'picked',
+                    id: doc[google.picker.Document.ID],
+                    name: doc[google.picker.Document.NAME],
+                    url: doc[google.picker.Document.URL]
+                };
+                sendToFlutter(payload);
+            } else if (data[google.picker.Response.ACTION] === google.picker.Action.CANCEL) {
+                sendToFlutter({ action: 'cancel' });
+            }
+        }
+
+        /**
+         * 頁面載入完成後向 Flutter 發送 ready 訊號
+         */
+        function notifyReady() {
+            sendToFlutter({ action: 'ready' });
+        }
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            notifyReady();
+        } else {
+            document.addEventListener('DOMContentLoaded', notifyReady);
+        }
+
+        window.addEventListener('flutterInAppWebViewPlatformReady', notifyReady);
+    </script>
+</body>
+
+</html>
