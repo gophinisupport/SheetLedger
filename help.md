@@ -55,7 +55,7 @@ Yes! Simply share the linked Google Sheet with your partner's Google Account via
 To protect your privacy and data security, SheetLedger only requests the minimum necessary scope (drive.file), which limits the app to accessing spreadsheets you explicitly authorize. Selecting a sheet shared by someone else relies on the official Google Picker API, which requires browser-based authentication. As a result, SheetLedger embeds an in-app WebView to let you securely log in and pick the shared spreadsheet.
 
 #### Q6: Why can't I find a Google Sheet that I created manually?
-For privacy and security reasons, SheetLedger requests only the minimum necessary scope (drive.file), which grants access strictly to sheets created directly within this app. If you want to link a sheet that you created manually in Google Drive (or one that was shared with you by someone else), please select the "Link Shared Sheet" option instead.
+For privacy and security reasons, SheetLedger requests only the minimum necessary scope (drive.file), which grants access strictly to sheets created directly within this app. If you want to link a sheet that you created manually in Google Drive (or one that was shared with you by someone else), please select the "Link Shared Spreadsheet" option instead.
 
 #### Q7: What are the limits of the Free tier vs. Premium subscription?
 
