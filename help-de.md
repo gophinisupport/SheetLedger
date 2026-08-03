@@ -49,22 +49,30 @@ Ja! Melden Sie sich einfach auf Ihren verschiedenen Geräten mit demselben Googl
 
 Ja! Teilen Sie dazu einfach das verknüpfte Google-Tabellenblatt über Google Drive mit dem Google-Konto Ihres Partners (erteilen Sie ihm Bearbeiter-Rechte). Lassen Sie Ihren Partner anschließend SheetLedger auf seinem Gerät öffnen und sich mit diesem geteilten Tabellenblatt verbinden. Sie beide können Ausgaben erfassen – unsere Identitätsprüfung stellt sicher, dass alle Einträge fälschungssicher bleiben. In der App können Sie Daten zudem ganz einfach nach bestimmten Benutzern filtern: Während Standarddiagramme die Daten aller Personen analysieren, können Sie eine E-Mail-Adresse als Filter festlegen, wenn Sie beispielsweise nur die Einträge Ihres Partners sehen möchten.
 
-#### F5: Welche Einschränkungen gibt es bei der kostenlosen Version im Vergleich zum Premium-Abonnement?
+### F5: Warum muss ich mich erneut anmelden, wenn ich ein geteiltes Tabellenblatt auswähle?
+
+Um Ihre Privatsphäre und Datensicherheit zu schützen, fordert SheetLedger nur die minimal erforderliche Berechtigung (drive.file) an. Dadurch kann die App nur auf Tabellenblätter zugreifen, die Sie ausdrücklich autorisieren. Die Auswahl eines von anderen Personen geteilten Tabellenblatts nutzt die offizielle Google Picker-API, welche eine browserbasierte Authentifizierung erfordert. Aus diesem Grund bettet SheetLedger eine In-App-WebView ein, über die Sie sich sicher anmelden und das geteilte Tabellenblatt auswählen können.
+
+### F6: Warum kann ich ein von mir manuell erstelltes Google-Tabellenblatt nicht finden?
+
+Aus Datenschutz- und Sicherheitsgründen fordert SheetLedger nur die minimal erforderliche Berechtigung (drive.file) an. Dadurch hat die App ausschließlich Zugriff auf Tabellenblätter, die direkt in dieser App erstellt wurden. Wenn Sie ein Tabellenblatt verknüpfen möchten, das Sie manuell in Google Drive erstellt haben (oder das von einer anderen Person mit Ihnen geteilt wurde), wählen Sie bitte stattdessen die Option „Geteiltes Tabellenblatt verknüpfen“ (Freigegebene Tabellenkalkulation verknüpfen).
+
+#### F7: Welche Einschränkungen gibt es bei der kostenlosen Version im Vergleich zum Premium-Abonnement?
 
 Die Cloud-Funktionen stehen nur mit einem aktiven Abonnement zur Verfügung. Da Google-API-Aufrufe nicht kostenlos sind, müssen wir Limits für die Cloud-Nutzung durchsetzen, um die Betriebskosten zu decken und das Projekt nachhaltig zu betreiben. Bei den lokalen Funktionen (ohne Cloud) sind alle Versionen absolut identisch – es gibt weder Funktionseinschränkungen noch störende Werbung. Wenn Sie keine Cloud-Funktionen benötigen, ist kein Abonnement erforderlich. Für die meisten Nutzer, die Cloud-Funktionen wünschen, empfehlen wir den Basic-Tarif, der alle grundlegenden Cloud-Funktionen abdeckt und die Anforderungen der meisten Anwender vollkommen erfüllt.
 
-#### F6: Kann ich SheetLedger auf Reisen oder ohne Internetverbindung nutzen?
+#### F8: Kann ich SheetLedger auf Reisen oder ohne Internetverbindung nutzen?
 
 Ja, absolut! SheetLedger ist offline voll funktionsfähig. Sie können Transaktionen jederzeit ohne Netzverbindung hinzufügen, bearbeiten oder suchen. Sobald Sie wieder online sind, synchronisiert SheetLedger alle ausstehenden Offline-Änderungen automatisch mit Ihren Google Sheets.
 
 
-#### F7: Wie übertrage ich meine Hauptbücher auf ein neues Smartphone oder Tablet?
+#### F9: Wie übertrage ich meine Hauptbücher auf ein neues Smartphone oder Tablet?
 
 - Für Cloud-verknüpfte Daten: Laden Sie SheetLedger einfach auf Ihr neues Gerät herunter, melden Sie sich mit demselben Google-Konto an und verbinden Sie es mit Ihrem bestehenden Google-Tabellenblatt-Hauptbuch. Alle Ihre Finanzdaten werden nahtlos abgerufen und synchronisiert.
 
 - Für rein lokale Daten (ohne Cloud): Wenn Ihr Hauptbuch ausschließlich lokal gespeichert und nicht mit Google Sheets verknüpft ist, können Sie unsere integrierte Sicherungs- und Wiederherstellungsfunktion (Backup & Restore) nutzen, um Ihre Daten zu exportieren und auf das neue Gerät zu übertragen.
 
-#### F8: Warum gibt es keine Wiederherstellungsfunktion für Cloud-Daten?
+#### F10: Warum gibt es keine Wiederherstellungsfunktion für Cloud-Daten?
 
 Cloud-Daten werden über eine verteilte Schreibarchitektur verarbeitet. Eine direkte Wiederherstellungsfunktion könnte Schreibkonflikte auslösen und zu Datenbeschädigungen führen. Aus diesem Grund bieten wir keine integrierte Wiederherstellungsfunktion für Cloud-Hauptbücher an. Wenn Sie Ihre Cloud-Daten sichern oder wiederherstellen möchten, können Sie einfach direkt in Google Drive eine Kopie Ihres Google-Tabellenblatts als Backup erstellen. Wenn Sie eine Wiederherstellung benötigen, erstellen Sie einfach ein neues Hauptbuch in SheetLedger und verknüpfen Sie es mit dieser gesicherten Kopie.
 
