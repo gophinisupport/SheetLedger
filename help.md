@@ -50,21 +50,28 @@ Yes! Simply sign in with the same Google Account on your different devices, then
 
 Yes! Simply share the linked Google Sheet with your partner's Google Account via Google Drive (grant them Editor access). Next, have them open SheetLedger on their device and link to that shared sheet. Both of you can log expenses—our identity verification ensures all records remain tamper-proof. In the app, you can also easily filter data by specific users; for example, while default charts analyze everyone's entries, you can filter by email address if you only want to view your partner's records.
 
-#### Q5: What are the limits of the Free tier vs. Premium subscription?
+#### Q5: Why do I need to log in again when selecting a shared sheet?
+
+To protect your privacy and data security, SheetLedger only requests the minimum necessary scope (drive.file), which limits the app to accessing spreadsheets you explicitly authorize. Selecting a sheet shared by someone else relies on the official Google Picker API, which requires browser-based authentication. As a result, SheetLedger embeds an in-app WebView to let you securely log in and pick the shared spreadsheet.
+
+#### Q6: Why can't I find a Google Sheet that I created manually?
+For privacy and security reasons, SheetLedger requests only the minimum necessary scope (drive.file), which grants access strictly to sheets created directly within this app. If you want to link a sheet that you created manually in Google Drive (or one that was shared with you by someone else), please select the "Link Shared Sheet" option instead.
+
+#### Q7: What are the limits of the Free tier vs. Premium subscription?
 
 Cloud functionality is only available with an active subscription. Because Google API calls are not free, we enforce cloud usage limits to manage operational costs and keep the project sustainable. For non-cloud local features, all versions are completely identical—there are no functional limits and zero annoying ads. If you don't need cloud synchronization, no subscription is required. For most users who want cloud capabilities, we recommend the Basic plan, which covers all essential cloud features and meets the needs of majority of users.
 
-#### Q6: Can I use SheetLedger while traveling or without internet access?
+#### Q8: Can I use SheetLedger while traveling or without internet access?
 
 Yes, absolutely! SheetLedger is fully functional offline. You can add, edit, or search transactions anytime without a network connection. Once you are back online, SheetLedger will automatically sync all pending offline changes to your Google Sheets.
 
-#### Q7: How do I transfer my ledgers to a new phone or tablet?
+#### Q9: How do I transfer my ledgers to a new phone or tablet?
 
 - For cloud-linked data: Simply download SheetLedger on your new device, sign in with the same Google Account, and link to your existing Google Sheet ledger. All your financial data will be seamlessly retrieved and synchronized.
 
 - For local-only data (unlinked): If your ledger is strictly stored locally without a Google Sheet connection, you can use our built-in Backup & Restore feature to export and migrate your data to the new device.
 
-#### Q8: Why is there no restore function for cloud-linked data?
+#### Q10: Why is there no restore function for cloud-linked data?
 
 Cloud data utilizes distributed writing. Offering a direct restore mechanism could trigger write conflicts and cause data corruption, which is why a built-in restore feature is omitted for cloud ledgers. If you wish to backup or restore cloud data, you can simply create a copy of your Google Sheet directly inside Google Drive as a backup. When you need to restore, create a new ledger in SheetLedger and link it to that backup copy.
 
