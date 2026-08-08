@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Drive Picker</title>
-    <!-- 載入 Google Identity Services (GIS) 與 GAPI SDK -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://apis.google.com/js/api.js" async defer></script>
     <style>
@@ -51,6 +50,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const clientId = urlParams.get('clientId');
         const developerKey = urlParams.get('key');
+        const appId = urlParams.get('appId');
 
         let tokenClient;
         let accessToken = null;
@@ -107,18 +107,22 @@
                 return;
             }
 
-            // 視圖 1：僅顯示「共享給我的」試算表 (作為預設視圖)
+            if (!appId) {
+                console.error('Missing appId parameter. Required for drive.file scope authorization.');
+                return;
+            }
+
             const sharedView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
                 .setLabel('Shared with me')
                 .setOwnedByMe(false)
                 .setMode(google.picker.DocsViewMode.LIST);
 
-            // 視圖 2：顯示「所有的」試算表
             const allView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
                 .setLabel('All')
                 .setMode(google.picker.DocsViewMode.LIST);
 
             const picker = new google.picker.PickerBuilder()
+                .setAppId(appId)
                 .addView(sharedView)
                 .addView(allView)
                 .setOAuthToken(accessToken)
