@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Drive Picker</title>
+    <!-- 載入 Google Identity Services (GIS) 與 GAPI SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #1a73e8;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #1557b0;
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="auth_btn" class="btn" onclick="handleAuthClick()" disabled>Link Shared Spreadsheet</button>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const clientId = urlParams.get('clientId');
+        const developerKey = urlParams.get('key');
+
+        let tokenClient;
+        let accessToken = null;
+        let pickerInited = false;
+        let gsisInited = false;
+
+        function gapiLoaded() {
+            gapi.load('picker', () => {
+                pickerInited = true;
+                maybeEnableButton();
+            });
+        }
+
+        function gisLoaded() {
+            if (!clientId) {
+                console.error('Missing clientId parameter');
+                return;
+            }
+
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: clientId,
+                scope: 'https://www.googleapis.com/auth/drive.file',
+                callback: (response) => {
+                    if (response.error !== undefined) {
+                        console.error('OAuth authorization error:', response);
+                        return;
+                    }
+                    accessToken = response.access_token;
+                    createPicker();
+                },
+            });
+            gsisInited = true;
+            maybeEnableButton();
+        }
+
+        function maybeEnableButton() {
+            if (pickerInited && gsisInited) {
+                document.getElementById('auth_btn').disabled = false;
+                handleAuthClick();
+            }
+        }
+
+        function handleAuthClick() {
+            if (accessToken === null) {
+                tokenClient.requestAccessToken({ prompt: '' });
+            } else {
+                createPicker();
+            }
+        }
+
+        function createPicker() {
+            if (!developerKey) {
+                console.error('Missing developerKey parameter');
+                return;
+            }
+
+            // 視圖 1：僅顯示「共享給我的」試算表 (作為預設視圖)
+            const sharedView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+                .setLabel('Shared with me')
+                .setOwnedByMe(false)
+                .setMode(google.picker.DocsViewMode.LIST);
+
+            // 視圖 2：顯示「所有的」試算表
+            const allView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+                .setLabel('All')
+                .setMode(google.picker.DocsViewMode.LIST);
+
+            const picker = new google.picker.PickerBuilder()
+                .addView(sharedView)
+                .addView(allView)
+                .setOAuthToken(accessToken)
+                .setDeveloperKey(developerKey)
+                .setCallback(pickerCallback)
+                .build();
+
+            picker.setVisible(true);
+        }
+
+        function pickerCallback(data) {
+            if (data.action == google.picker.Action.PICKED) {
+                const doc = data.docs[0];
+                const fileId = doc.id;
+                const fileName = encodeURIComponent(doc.name);
+                window.location.href = `sheetledger://app/picker-callback?fileId=${fileId}&fileName=${fileName}`;
+            } else if (data.action == google.picker.Action.CANCEL) {
+                window.location.href = `sheetledger://app/picker-callback?action=cancel`;
+            }
+        }
+
+        window.onload = () => {
+            gapiLoaded();
+            gisLoaded();
+        };
+    </script>
+</body>
+
+</html>
