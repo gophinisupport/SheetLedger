@@ -51,7 +51,7 @@ Ja! Teilen Sie dazu einfach das verknüpfte Google-Tabellenblatt über Google Dr
 
 ### F5: Warum muss ich mich erneut anmelden, wenn ich ein geteiltes Tabellenblatt auswähle?
 
-Um Ihre Privatsphäre und Datensicherheit zu schützen, fordert SheetLedger nur die minimal erforderliche Berechtigung (drive.file) an. Dadurch kann die App nur auf Tabellenblätter zugreifen, die Sie ausdrücklich autorisieren. Die Auswahl eines von anderen Personen geteilten Tabellenblatts nutzt die offizielle Google Picker-API, welche eine browserbasierte Authentifizierung erfordert. Aus diesem Grund bettet SheetLedger eine In-App-WebView ein, über die Sie sich sicher anmelden und das geteilte Tabellenblatt auswählen können.
+Um Ihre Privatsphäre und Datensicherheit zu schützen, fordert SheetLedger nur die minimal erforderliche Berechtigung (drive.file) an. Dadurch kann die App nur auf Tabellenblätter zugreifen, die Sie ausdrücklich autorisieren. Die Auswahl eines von anderen Personen geteilten Tabellenblatts nutzt die offizielle Google Picker-API, welche eine browserbasierte Authentifizierung erfordert. Aus diesem Grund öffnet SheetLedger Ihren externen Webbrowser, damit Sie sich sicher anmelden und das geteilte Tabellenblatt auswählen können.
 
 ### F6: Warum kann ich ein von mir manuell erstelltes Google-Tabellenblatt nicht finden?
 
